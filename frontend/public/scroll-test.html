@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scroll Layout Test</title>
+<style>
+  /* Mimic App.vue global styles */
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  #app {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Mimic platform/index.vue */
+  .main {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    min-height: 0;
+  }
+  .aside_box {
+    min-width: 260px;
+    width: 260px;
+    height: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #f9f9f9;
+    border-right: 1px solid #e7e7e7;
+  }
+  .platform-route-outlet {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Mimic DocumentWorkspace.vue */
+  .document-workspace {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .chat-panel {
+    flex: 1;
+    min-height: 0;
+    min-width: 400px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Mimic chat/index.vue */
+  .chat {
+    font-size: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: calc(100vw - 260px);
+    min-width: 400px;
+  }
+  .chat_scroll_box {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .input-container {
+    min-height: 115px;
+    flex-shrink: 0;
+    margin: 16px auto 4px;
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    background: #e9f8ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #07c05f;
+  }
+  .msg_list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 800px;
+    flex: 1;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .msg-item {
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    border-radius: 6px;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  .msg-item.user {
+    background: #e9f8ec;
+    align-self: flex-end;
+    max-width: 70%;
+  }
+  .msg-item.bot {
+    background: #fff;
+    align-self: flex-start;
+    max-width: 100%;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="main">
+    <div class="aside_box">
+      <p style="padding:10px">Sidebar</p>
+    </div>
+    <div class="platform-route-outlet">
+      <div class="document-workspace">
+        <div class="chat-panel" style="width:100%">
+          <div class="chat">
+            <div class="chat_scroll_box">
+              <div class="msg_list">
+                <div class="msg-item user">User message 1: Hello, how are you?</div>
+                <div class="msg-item bot">Bot message 1: I am fine, thank you! This is a long response to test scrolling. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                <div class="msg-item user">User message 2: Can you tell me more?</div>
+                <div class="msg-item bot">Bot message 2: Sure! Here is a very long response to make sure the content overflows the visible area. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+                <div class="msg-item user">User message 3: Another question?</div>
+                <div class="msg-item bot">Bot message 3: Another long response. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                <div class="msg-item user">User message 4: Testing scroll?</div>
+                <div class="msg-item bot">Bot message 4: Yes, this should be scrollable! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</div>
+                <div class="msg-item user">User message 5: More content?</div>
+                <div class="msg-item bot">Bot message 5: Even more content to ensure overflow. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+                <div class="msg-item user">User message 6: Final message</div>
+                <div class="msg-item bot">Bot message 6: Final response. The content above should be scrollable. If you can see this message without scrolling, the content doesn't overflow. If you CAN scroll, the layout is working correctly.</div>
+              </div>
+            </div>
+            <div class="input-container">
+              <span>Input Field Area</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
